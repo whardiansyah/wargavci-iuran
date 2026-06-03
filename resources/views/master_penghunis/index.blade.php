@@ -23,16 +23,29 @@
 
                     <!-- Search Box -->
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <form method="GET" action="{{ route('master_penghunis.index') }}" class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan Kepala Keluarga, Kontak Person, atau Nomor Rumah..." value="{{ $search ?? '' }}">
-                                <button class="btn btn-outline-secondary" type="submit">
-                                    <i class="fas fa-search"></i> Cari
-                                </button>
-                                @if ($search)
-                                    <a href="{{ route('master_penghunis.index') }}" class="btn btn-outline-secondary">
-                                        <i class="fas fa-times"></i> Reset
-                                    </a>
+                        <div class="col-md-9">
+                            <form method="GET" action="{{ route('master_penghunis.index') }}" class="row g-2">
+                                <div class="col-md-7">
+                                    <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan Kepala Keluarga, Kontak Person, atau Nomor Rumah..." value="{{ $search ?? '' }}">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="status" class="form-select">
+                                        <option value="">Semua Status</option>
+                                        <option value="aktif" {{ ($status ?? '') === 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                        <option value="tidak aktif" {{ ($status ?? '') === 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-outline-secondary w-100" type="submit">
+                                        <i class="fas fa-search"></i> Cari
+                                    </button>
+                                </div>
+                                @if ($search || $status)
+                                    <div class="col-md-auto">
+                                        <a href="{{ route('master_penghunis.index') }}" class="btn btn-outline-secondary">
+                                            <i class="fas fa-times"></i> Reset
+                                        </a>
+                                    </div>
                                 @endif
                             </form>
                         </div>

@@ -147,6 +147,29 @@
                                 $tanggalBayar = $pembayaran->tanggal_bayar ? $pembayaran->tanggal_bayar->format('Y-m-d') : now()->toDateString();
                                 $sisaBayar = $row['sisaBayar'];
                                 $totalTagihan = $row['totalTagihan'];
+                                $phone = preg_replace('/\D+/', '', $penghuni?->kontak_person ?? '');
+                                if (str_starts_with($phone, '0')) {
+                                    $phone = '62' . substr($phone, 1);
+                                } elseif (str_starts_with($phone, '8')) {
+                                    $phone = '62' . $phone;
+                                }
+                                $template = "Assalamualaikum wr.wb Yth. Bapak/Ibu " . ($penghuni?->kepala_keluarga ?? '-') . "\n"
+                                    . "Berikut kami kirimkan tagihan IPL & Air Bersama Komplek Villa Cilame Indah 2.\n\n"
+                                    . "No Rumah: " . ($penghuni?->nomor_rumah ?? '-') . "\n"
+                                    . "Periode: " . $periodeBulan . " " . $periodeTahun . "\n"
+                                    . "Total Tagihan: Rp" . number_format($totalTagihan, 0, ',', '.') . "\n\n"
+                                    . "Pembayaran dapat dilakukan melalui Transfer ke:
+LinkAja di Nomor ( 081321454503 an Windi Hardiansyah ) 
+Bank BSI 7211535967 an Windi Hardiansyah.
+Bank Mandiri 1310000710907 an Windi Hardiansyah
+Bank Jago Syariah 502589069422 an Windi Hardiansyah
+ShopeePay 8930813211454503 an Windi Hardiansyah 
+atau bisa langsung Cash ke Rumah bpk Windi(C14) atau bpk Imam(C3)." . "\n\n"
+                                     . "Agar operasional pengelolaan air komplek berjalan lancar dimohon untuk melakukan pembayaran sebelum tanggal 5 disetiap bulannya." . "\n\n"
+                                     . "Bagi yang sudah transfer harap menginformasikan ke nmr WA bpk Windi di 081321454503." . "\n\n"
+                                     . "Terimakasih atas perhatiannya "
+                                     . "insya allah menjadi amal kebaikan bagi ibu bapak semuanya";
+                                $url = 'https://web.whatsapp.com/send?phone=' . $phone . '&text=' . rawurlencode($template) . '';
                             @endphp
                             <div class="modal fade" id="tagihanRutinModal{{ $index }}" tabindex="-1" aria-labelledby="tagihanRutinModalLabel{{ $index }}" aria-hidden="true">
                                 <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -279,7 +302,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success btn-kirim-wa"
                                                     data-modal-id="tagihanRutinModal{{ $index }}"
-                                                    data-phone="{{ $penghuni?->kontak_person ?? '' }}">
+                                                    data-url="{{ $url }}">
                                                 <i class="fab fa-whatsapp"></i> Kirim ke WhatsApp
                                             </button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -458,7 +481,8 @@
     document.querySelectorAll('.btn-kirim-wa').forEach(function (btn) {
         btn.addEventListener('click', async function () {
             const modalId = this.dataset.modalId;
-            const rawPhone = (this.dataset.phone || '').replace(/\D/g, '');
+            const whatsappUrl = this.dataset.url || '';
+            // alert(whatsappUrl);
             const invoiceEl = document.querySelector('#' + modalId + ' .invoice-preview');
 
             if (!invoiceEl) {
@@ -478,21 +502,31 @@
                 });
 
                 canvas.toBlob(async function (blob) {
+                    if (!blob) {
+                        alert('Gagal membuat gambar tagihan.');
+                        btn.disabled = false;
+                        btn.innerHTML = originalHtml;
+                        return;
+                    }
+
                     const fileName = 'tagihan-' + modalId + '.png';
                     const file = new File([blob], fileName, { type: 'image/png' });
+                    await copyImageToClipboard(blob);
 
                     const canShareFile = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
+                    // alert('canShareFile: ' + canShareFile);
 
                     if (canShareFile) {
                         try {
-                            await navigator.share({ files: [file], title: 'Tagihan Rutin' });
+                            // await navigator.share({ files: [file], title: 'Tagihan Rutin' });
+                            openWhatsapp(whatsappUrl);
                         } catch (shareErr) {
                             if (shareErr.name !== 'AbortError') {
-                                fallbackDownloadAndWa(blob, fileName, rawPhone);
+                                fallbackDownloadAndWa(blob, fileName, whatsappUrl);
                             }
                         }
                     } else {
-                        fallbackDownloadAndWa(blob, fileName, rawPhone);
+                        fallbackDownloadAndWa(blob, fileName, whatsappUrl);
                     }
 
                     btn.disabled = false;
@@ -507,7 +541,25 @@
         });
     });
 
-    function fallbackDownloadAndWa(blob, fileName, rawPhone) {
+    async function copyImageToClipboard(blob) {
+        if (!navigator.clipboard || !window.ClipboardItem) {
+            return false;
+        }
+
+        try {
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    [blob.type]: blob,
+                }),
+            ]);
+            return true;
+        } catch (copyErr) {
+            console.warn('Gagal menyalin gambar ke clipboard:', copyErr);
+            return false;
+        }
+    }
+
+    function fallbackDownloadAndWa(blob, fileName, whatsappUrl) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -515,14 +567,12 @@
         a.click();
         setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
 
-        if (rawPhone) {
-            let waPhone = rawPhone;
-            if (waPhone.startsWith('0')) {
-                waPhone = '62' + waPhone.slice(1);
-            } else if (waPhone.startsWith('8')) {
-                waPhone = '62' + waPhone;
-            }
-            window.open('https://wa.me/' + waPhone, '_blank');
+        openWhatsapp(whatsappUrl);
+    }
+
+    function openWhatsapp(whatsappUrl) {
+        if (whatsappUrl) {
+            window.open(whatsappUrl, '_blank');
         }
     }
 </script>

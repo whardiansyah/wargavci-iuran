@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\TabunganUmrohController;
 use App\Http\Controllers\LaporanTabunganUmrohController;
+use App\Http\Controllers\LaporanPembayaranController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,6 +80,7 @@ Route::middleware('auth')->group(function () {
     // Laporan
     Route::get('laporan/tabungan-umroh', [LaporanTabunganUmrohController::class, 'index'])->name('laporan.tabungan_umroh');
     Route::get('laporan/tabungan-umroh/detail/{anggotaId}', [LaporanTabunganUmrohController::class, 'detail'])->name('laporan.tabungan_umroh.detail');
+    Route::get('laporan/pembayaran', [LaporanPembayaranController::class, 'index'])->name('laporan.pembayaran');
 });
 
 require __DIR__.'/auth.php';

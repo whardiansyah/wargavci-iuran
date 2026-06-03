@@ -413,6 +413,9 @@
             <li class="menu-item {{ request()->routeIs('laporan.*') ? 'show' : '' }}">
                 <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, this)"><i class="fas fa-file-invoice"></i> Laporan</a>
                 <ul class="submenu">
+                    @can('viewAny', App\Models\Tagihan::class)
+                        <li><a href="{{ route('laporan.pembayaran') }}" class="{{ request()->routeIs('laporan.pembayaran') ? 'active' : '' }}"><i class="fas fa-chart-column"></i> Pembayaran</a></li>
+                    @endcan
                     @can('viewAny', App\Models\TabunganUmroh::class)
                         <li><a href="{{ route('laporan.tabungan_umroh') }}" class="{{ request()->routeIs('laporan.tabungan_umroh*') ? 'active' : '' }}"><i class="fas fa-piggy-bank"></i> Tabungan Umroh</a></li>
                     @endcan

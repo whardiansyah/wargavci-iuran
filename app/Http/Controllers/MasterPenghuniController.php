@@ -14,16 +14,27 @@ class MasterPenghuniController extends Controller
     {
         $this->authorize('viewAny', MasterPenghuni::class);
         $search = $request->get('search');
+        $status = $request->get('status');
+        if (! in_array($status, ['aktif', 'tidak aktif'], true)) {
+            $status = null;
+        }
+
         $query = MasterPenghuni::query();
         
         if ($search) {
-            $query->where('kepala_keluarga', 'like', '%' . $search . '%')
-                  ->orWhere('kontak_person', 'like', '%' . $search . '%')
-                  ->orWhere('nomor_rumah', 'like', '%' . $search . '%');
+            $query->where(function ($q) use ($search) {
+                $q->where('kepala_keluarga', 'like', '%' . $search . '%')
+                    ->orWhere('kontak_person', 'like', '%' . $search . '%')
+                    ->orWhere('nomor_rumah', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($status) {
+            $query->where('status', $status);
         }
         
-        $masterPenghunis = $query->paginate(10);
-        return view('master_penghunis.index', compact('masterPenghunis', 'search'));
+        $masterPenghunis = $query->paginate(10)->withQueryString();
+        return view('master_penghunis.index', compact('masterPenghunis', 'search', 'status'));
     }
 
     /**
