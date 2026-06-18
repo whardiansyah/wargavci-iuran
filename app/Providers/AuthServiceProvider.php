@@ -12,6 +12,7 @@ use App\Models\PencatatanAir;
 use App\Models\Tagihan;
 use App\Models\TransaksiKas;
 use App\Models\Anggota;
+use App\Models\Program;
 use App\Models\TabunganUmroh;
 use App\Policies\UserPolicy;
 use App\Policies\RolePolicy;
@@ -21,6 +22,7 @@ use App\Policies\TagihanPolicy;
 use App\Policies\TransaksiKasPolicy;
 use App\Policies\MasterConfigPolicy;
 use App\Policies\AnggotaPolicy;
+use App\Policies\ProgramPolicy;
 use App\Policies\TabunganUmrohPolicy;
 
 class AuthServiceProvider extends ServiceProvider
@@ -39,6 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         TransaksiKas::class => TransaksiKasPolicy::class,
         MasterConfig::class => MasterConfigPolicy::class,
         Anggota::class => AnggotaPolicy::class,
+        Program::class => ProgramPolicy::class,
         TabunganUmroh::class => TabunganUmrohPolicy::class,
     ];
 

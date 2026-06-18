@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggota;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -15,8 +16,9 @@ class AnggotaController extends Controller
         $search = $request->get('search');
         $status = $request->get('status');
         $jenisKelamin = $request->get('jenis_kelamin');
+        $programId = $request->get('program_id');
 
-        $query = Anggota::query();
+        $query = Anggota::query()->with('program');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -35,9 +37,15 @@ class AnggotaController extends Controller
             $query->where('jenis_kelamin', $jenisKelamin);
         }
 
-        $anggota = $query->latest()->paginate(10)->withQueryString();
+        if ($programId) {
+            $query->where('program_id', $programId);
+        }
 
-        return view('anggota.index', compact('anggota', 'search', 'status', 'jenisKelamin'));
+        $anggota = $query->latest()->paginate(10)->withQueryString();
+        $programList = Program::orderBy('nama')->get();
+        $selectedProgram = $programId ? $programList->firstWhere('id', (int) $programId) : null;
+
+        return view('anggota.index', compact('anggota', 'search', 'status', 'jenisKelamin', 'programId', 'programList', 'selectedProgram'));
     }
 
     public function create()
@@ -46,6 +54,7 @@ class AnggotaController extends Controller
 
         return view('anggota.create', [
             'anggota' => new Anggota(['status' => 'aktif']),
+            'programList' => Program::where('status', 'aktif')->orderBy('nama')->get(),
         ]);
     }
 
@@ -69,7 +78,10 @@ class AnggotaController extends Controller
     {
         $this->authorize('update', $anggota);
 
-        return view('anggota.edit', compact('anggota'));
+        return view('anggota.edit', [
+            'anggota' => $anggota,
+            'programList' => Program::orderBy('nama')->get(),
+        ]);
     }
 
     public function update(Request $request, Anggota $anggota)
@@ -94,6 +106,7 @@ class AnggotaController extends Controller
     {
         return $request->validate([
             'nama' => ['required', 'string', 'max:255'],
+            'program_id' => ['nullable', 'exists:program,id'],
             'nik' => [
                 'nullable',
                 'string',

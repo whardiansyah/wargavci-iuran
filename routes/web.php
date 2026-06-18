@@ -12,6 +12,7 @@ use App\Http\Controllers\MasterConfigController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\TabunganUmrohController;
 use App\Http\Controllers\LaporanTabunganUmrohController;
 use App\Http\Controllers\LaporanPembayaranController;
@@ -34,6 +35,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard/metode-bayar-detail', [DashboardController::class, 'metodeBayarDetail'])->middleware(['auth'])->name('dashboard.metode_bayar_detail');
+Route::get('/dashboard/transaksi-kas-detail', [DashboardController::class, 'transaksiKasDetail'])->middleware(['auth'])->name('dashboard.transaksi_kas_detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -49,6 +51,7 @@ Route::middleware('auth')->group(function () {
     
     // Master Penghuni Management
     Route::resource('master_penghunis', MasterPenghuniController::class);
+    Route::resource('program', ProgramController::class);
     Route::resource('anggota', AnggotaController::class)->parameters([
         'anggota' => 'anggota',
     ]);

@@ -1,5 +1,18 @@
 <div class="row">
     <div class="col-md-6 mb-3">
+        <label for="program_id" class="form-label">Program</label>
+        <select name="program_id" id="program_id" class="form-select @error('program_id') is-invalid @enderror">
+            <option value="">Pilih Program</option>
+            @foreach ($programList as $program)
+                <option value="{{ $program->id }}" {{ (string) old('program_id', $anggota->program_id) === (string) $program->id ? 'selected' : '' }}>{{ $program->nama }}</option>
+            @endforeach
+        </select>
+        @error('program_id')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-md-6 mb-3">
         <label for="nama" class="form-label">Nama <span class="text-danger">*</span></label>
         <input type="text" name="nama" id="nama" value="{{ old('nama', $anggota->nama) }}" class="form-control @error('nama') is-invalid @enderror" required>
         @error('nama')

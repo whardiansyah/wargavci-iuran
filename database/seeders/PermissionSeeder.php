@@ -119,6 +119,26 @@ class PermissionSeeder extends Seeder
                 'description' => 'Izin untuk menghapus data anggota umroh',
             ],
             [
+                'name' => 'view_program',
+                'display_name' => 'Lihat Program',
+                'description' => 'Izin untuk melihat daftar program',
+            ],
+            [
+                'name' => 'create_program',
+                'display_name' => 'Buat Program',
+                'description' => 'Izin untuk membuat data program baru',
+            ],
+            [
+                'name' => 'edit_program',
+                'display_name' => 'Edit Program',
+                'description' => 'Izin untuk mengedit data program',
+            ],
+            [
+                'name' => 'delete_program',
+                'display_name' => 'Hapus Program',
+                'description' => 'Izin untuk menghapus data program',
+            ],
+            [
                 'name' => 'view_pencatatan_air',
                 'display_name' => 'Lihat Pencatatan Air',
                 'description' => 'Izin untuk melihat daftar pencatatan air',
@@ -162,6 +182,31 @@ class PermissionSeeder extends Seeder
                 'name' => 'delete_tagihan',
                 'display_name' => 'Hapus Tagihan',
                 'description' => 'Izin untuk menghapus dan reset tagihan',
+            ],
+            [
+                'name' => 'view_tabungan_umroh',
+                'display_name' => 'Lihat Tabungan Umroh',
+                'description' => 'Izin untuk melihat daftar tabungan umroh',
+            ],
+            [
+                'name' => 'create_tabungan_umroh',
+                'display_name' => 'Buat Tabungan Umroh',
+                'description' => 'Izin untuk membuat data tabungan umroh baru',
+            ],
+            [
+                'name' => 'edit_tabungan_umroh',
+                'display_name' => 'Edit Tabungan Umroh',
+                'description' => 'Izin untuk mengedit data tabungan umroh',
+            ],
+            [
+                'name' => 'delete_tabungan_umroh',
+                'display_name' => 'Hapus Tabungan Umroh',
+                'description' => 'Izin untuk menghapus data tabungan umroh',
+            ],
+            [
+                'name' => 'view_laporan_tabungan_umroh',
+                'display_name' => 'Lihat Laporan Tabungan Umroh',
+                'description' => 'Izin untuk melihat laporan tabungan umroh',
             ],
             [
                 'name' => 'view_transaksi_kas',

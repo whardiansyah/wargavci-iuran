@@ -412,6 +412,10 @@ class PencatatanAirController extends Controller
         $hargakubik = MasterConfig::where('code', 'harga-air')->first();
         $hargaabodemen = MasterConfig::where('code', 'abodemen-air')->first();
 
-        return ceil((($meterkini - $meterlalu) * $hargakubik->value + $hargaabodemen->value)/1000)*1000;
+        if($meterkini - $meterlalu == 0) {
+            return 0;
+        }else {
+            return ceil((($meterkini - $meterlalu) * $hargakubik->value + $hargaabodemen->value)/1000)*1000;
+        }
     }
 }

@@ -9,7 +9,7 @@ class LaporanTabunganUmrohController extends Controller
 {
     public function index(Request $request)
     {
-        $this->authorize('viewAny', TabunganUmroh::class);
+        $this->authorize('viewReport', TabunganUmroh::class);
 
         $chartData = TabunganUmroh::query()
             ->with('anggota:id,nama')
@@ -32,7 +32,7 @@ class LaporanTabunganUmrohController extends Controller
 
     public function detail(Request $request, int $anggotaId)
     {
-        $this->authorize('viewAny', TabunganUmroh::class);
+        $this->authorize('viewReport', TabunganUmroh::class);
 
         $data = TabunganUmroh::query()
             ->with('anggota:id,nama')

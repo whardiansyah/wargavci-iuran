@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Anggota extends Model
 {
@@ -12,6 +13,7 @@ class Anggota extends Model
     protected $table = 'anggota';
 
     protected $fillable = [
+        'program_id',
         'nama',
         'nik',
         'jenis_kelamin',
@@ -28,4 +30,9 @@ class Anggota extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function program(): BelongsTo
+    {
+        return $this->belongsTo(Program::class, 'program_id');
+    }
 }

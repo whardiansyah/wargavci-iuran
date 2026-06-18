@@ -370,9 +370,12 @@
         
         <ul class="sidebar-menu">
             <li><a href="{{ route('dashboard') }}" ><i class="fas fa-th-large"></i> Dashboard</a></li>
-            <li class="menu-item {{ request()->routeIs('anggota.*') ? 'show' : '' }}">
+            <li class="menu-item {{ request()->routeIs('program.*', 'anggota.*') ? 'show' : '' }}">
                 <a href="#" class="menu-toggle" onclick="toggleSubmenu(event, this)"><i class="fas fa-building"></i> Villa Management</a>
                 <ul class="submenu">
+                    @can('viewAny', App\Models\Program::class)
+                        <li><a href="{{ route('program.index') }}" class="{{ request()->routeIs('program.*') ? 'active' : '' }}"><i class="fas fa-list-check"></i> Program</a></li>
+                    @endcan
                     @can('viewAny', App\Models\Anggota::class)
                         <li><a href="{{ route('anggota.index') }}" class="{{ request()->routeIs('anggota.*') ? 'active' : '' }}"><i class="fas fa-kaaba"></i> Anggota Umroh</a></li>
                     @endcan

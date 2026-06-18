@@ -46,6 +46,12 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'edit_anggota', 'display_name' => 'Edit Anggota Umroh', 'description' => 'Mengubah anggota umroh'],
             ['name' => 'delete_anggota', 'display_name' => 'Delete Anggota Umroh', 'description' => 'Menghapus anggota umroh'],
 
+            // Program Permissions
+            ['name' => 'view_program', 'display_name' => 'View Program', 'description' => 'Melihat daftar program'],
+            ['name' => 'create_program', 'display_name' => 'Create Program', 'description' => 'Membuat program'],
+            ['name' => 'edit_program', 'display_name' => 'Edit Program', 'description' => 'Mengubah program'],
+            ['name' => 'delete_program', 'display_name' => 'Delete Program', 'description' => 'Menghapus program'],
+
             // Tagihan Permissions
             ['name' => 'view_tagihan', 'display_name' => 'View Tagihan', 'description' => 'Melihat daftar tagihan'],
             ['name' => 'create_tagihan', 'display_name' => 'Create Tagihan', 'description' => 'Membuat dan generate tagihan'],

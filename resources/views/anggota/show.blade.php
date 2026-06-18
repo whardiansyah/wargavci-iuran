@@ -27,6 +27,10 @@
                         <td>{{ $anggota->nama }}</td>
                     </tr>
                     <tr>
+                        <th>Program</th>
+                        <td>{{ $anggota->program?->nama ?? '-' }}</td>
+                    </tr>
+                    <tr>
                         <th>NIK</th>
                         <td>{{ $anggota->nik ?? '-' }}</td>
                     </tr>

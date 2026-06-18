@@ -12,6 +12,11 @@ class TabunganUmrohPolicy
         return $user->hasPermission('view_tabungan_umroh');
     }
 
+    public function viewReport(User $user): bool
+    {
+        return $user->hasPermission('view_laporan_tabungan_umroh');
+    }
+
     public function view(User $user, TabunganUmroh $tabunganUmroh): bool
     {
         return $user->hasPermission('view_tabungan_umroh');
