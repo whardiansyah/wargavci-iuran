@@ -113,6 +113,42 @@
             padding: 8px 15px;
         }
 
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+            border: 1px solid #e3e6f0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .dashboard-header h3 {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .dashboard-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(69, 104, 220, 0.08);
+        }
+
+        .dashboard-badge.success {
+            color: var(--success);
+            background: rgba(45, 206, 137, 0.12);
+        }
+
+        .dashboard-badge.warning {
+            color: var(--warning);
+            background: rgba(251, 99, 64, 0.12);
+        }
+
         /* Stat Cards */
         .stat-card {
             background: white;
@@ -365,7 +401,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="brand">
-            <h5><i class="fas fa-building"></i> Villa Cilame</h5>
+            <h5><i class="fas fa-building"></i> Villa Cilame Indah</h5>
         </div>
         
         <ul class="sidebar-menu">
@@ -402,7 +438,7 @@
                         <li><a href="{{ route('tagihan.rutin') }}" class="{{ request()->routeIs('tagihan.rutin') ? 'active' : '' }}"><i class="fas fa-receipt"></i> Tagihan Rutin</a></li>
                     @endcan
                     @can('viewAny', App\Models\TabunganUmroh::class)
-                        <li><a href="{{ route('tabungan_umroh.index') }}" class="{{ request()->routeIs('tabungan_umroh.*') ? 'active' : '' }}"><i class="fas fa-piggy-bank"></i> Tabungan Umroh</a></li>
+                        <li><a href="{{ route('tabungan_umroh.index') }}" class="{{ request()->routeIs('tabungan_umroh.*') ? 'active' : '' }}"><i class="fas fa-piggy-bank"></i> Tabungan</a></li>
                     @endcan
                 </ul>
             </li>
@@ -420,7 +456,7 @@
                         <li><a href="{{ route('laporan.pembayaran') }}" class="{{ request()->routeIs('laporan.pembayaran') ? 'active' : '' }}"><i class="fas fa-chart-column"></i> Pembayaran</a></li>
                     @endcan
                     @can('viewAny', App\Models\TabunganUmroh::class)
-                        <li><a href="{{ route('laporan.tabungan_umroh') }}" class="{{ request()->routeIs('laporan.tabungan_umroh*') ? 'active' : '' }}"><i class="fas fa-piggy-bank"></i> Tabungan Umroh</a></li>
+                        <li><a href="{{ route('laporan.tabungan_umroh') }}" class="{{ request()->routeIs('laporan.tabungan_umroh*') ? 'active' : '' }}"><i class="fas fa-piggy-bank"></i> Tabungan</a></li>
                     @endcan
                 </ul>
             </li>

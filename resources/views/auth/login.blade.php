@@ -4,9 +4,9 @@
 
     <div class="text-center mb-5">
         <div class="mb-3">
-            <img src="/villa-icon.png" alt="Villa Cilame Icon" style="max-width: 120px; height: auto; object-fit: contain;">
+            <img src="/logo-vci2.svg" alt="Villa Cilame Icon" style="max-width: 820px; height: auto; object-fit: contain;">
         </div>
-        <h2 class="h5 font-weight-bold text-dark mb-0">Pengelolaan Kompleks Villa Cilame Indah</h2>
+        <!-- <h2 class="h5 font-weight-bold text-dark mb-0">Pengelolaan Kompleks Villa Cilame Indah</h2> -->
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="user">

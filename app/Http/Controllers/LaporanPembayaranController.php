@@ -53,6 +53,9 @@ class LaporanPembayaranController extends Controller
         });
 
         $totalBayar = (int) $rows->sum('total_bayar');
+        $jumlahRumah = $rows->count();
+        $rataPerRumah = $jumlahRumah > 0 ? (int) round($totalBayar / $jumlahRumah) : 0;
+        $topRumah = $rows->take(5)->values();
         $masterPenghunis = MasterPenghuni::query()
             ->orderBy('nomor_rumah')
             ->get(['id', 'nomor_rumah', 'kepala_keluarga']);
@@ -63,7 +66,10 @@ class LaporanPembayaranController extends Controller
             'nomorRumah',
             'periode',
             'rows',
-            'totalBayar'
+            'totalBayar',
+            'jumlahRumah',
+            'rataPerRumah',
+            'topRumah'
         ));
     }
 }

@@ -16,19 +16,30 @@ body.bg-gradient-primary {
 }
 
 .bg-login-image {
-    background: linear-gradient(135deg, #FFD700 0%, #FF6347 100%);
-    background-image: url('/villa-cilame-logo.png'), linear-gradient(135deg, #FFD700 0%, #FF6347 100%);
-    background-position: center, center;
-    background-repeat: no-repeat, no-repeat;
-    background-size: 70%, cover;
-    background-attachment: fixed;
+    min-height: 520px;
+    padding: clamp(2rem, 5vw, 4rem);
+    background: linear-gradient(145deg, #fff8d6 0%, #ffd978 48%, #ff8a65 100%);
     position: relative;
-    border: 3px solid #ffffff;
-    border-radius: 8px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
-    display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+}
+
+.bg-login-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.55), transparent 68%);
+}
+
+.login-logo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(100%, 340px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 22px rgba(83, 44, 18, 0.18));
 }
 
 .card {

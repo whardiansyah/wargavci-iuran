@@ -181,7 +181,7 @@ atau bisa langsung Cash ke Rumah bpk Windi(C14) atau bpk Imam(C3)." . "\n\n"
                                         <div class="modal-body">
                                             <div class="invoice-preview">
                                                 <div class="invoice-header">
-                                                    <img src="{{ asset('villa-cilame-logo.png') }}" alt="Villa Cilame Indah" class="invoice-logo">
+                                                    <img src="{{ asset('img2.png') }}" alt="Villa Cilame Indah" class="invoice-logo">
                                                     <div class="invoice-title">
                                                         <h4>TAGIHAN IPL &amp; AIR BERSAMA</h4>
                                                         <h4>KOMPLEK VILLA CILAME INDAH 2</h4>
@@ -336,13 +336,13 @@ atau bisa langsung Cash ke Rumah bpk Windi(C14) atau bpk Imam(C3)." . "\n\n"
         align-items: center;
         display: grid;
         grid-template-columns: 220px 1fr;
-        min-height: 135px;
+        /* min-height: 135px; */
         padding: 16px 22px 10px;
     }
 
     .invoice-logo {
-        max-height: 92px;
-        max-width: 180px;
+        max-width: 100%;
+        width: 240px;
     }
 
     .invoice-title {

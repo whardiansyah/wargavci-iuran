@@ -1,8 +1,21 @@
 @extends('layouts.admin')
 
 @section('content')
+    <div class="dashboard-header">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-start align-items-lg-center gap-3">
+            <div>
+                <h3 class="mb-1">Dashboard Operasional</h3>
+                <p class="mb-0 text-muted">Ringkasan keuangan, pembayaran, dan pemakaian air untuk pengelolaan villa.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="dashboard-badge"><i class="fas fa-calendar-alt me-2"></i> Bulan {{ ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][now()->month] }} {{ now()->year }}</span>
+                <span class="dashboard-badge success"><i class="fas fa-circle-check me-2"></i> Data real-time</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Stat Cards -->
-    <div class="row">
+    <div class="row g-3">
         <div class="col-lg-3 col-md-6">
             <div class="stat-card card-info">
                 <div class="stat-icon">
